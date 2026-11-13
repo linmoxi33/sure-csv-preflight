@@ -1,0 +1,7 @@
+{
+  "number_format": "1.234,56",
+  "date_format": "%Y-%m-%d",
+  "signage_convention": "inflows_positive",
+  "amount_type_strategy": "signed_amount",
+  "col_sep": ","
+}

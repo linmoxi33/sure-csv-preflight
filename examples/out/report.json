@@ -1,0 +1,149 @@
+{
+  "tool": "sure-csv-preflight",
+  "version": "1.0.0",
+  "source": {
+    "path": "examples/in/us-bank.csv",
+    "sha256": "8055d147d79db959c442f5a45696869ef5ff326544bc0c58ccea403efa24ddb6",
+    "bytes": 181
+  },
+  "config": {
+    "amount_col_label": "amount",
+    "amount_type_identifier_value": null,
+    "amount_type_inflow_value": null,
+    "amount_type_strategy": "signed_amount",
+    "col_sep": ",",
+    "currency_col_label": "currency",
+    "date_col_label": "date",
+    "date_format": "%Y-%m-%d",
+    "default_currency": "USD",
+    "entity_type_col_label": "entity_type",
+    "name_col_label": "name",
+    "number_format": "1.234,56",
+    "rows_to_skip": 0,
+    "signage_convention": "inflows_positive"
+  },
+  "headers": [
+    "date",
+    "name",
+    "amount",
+    "category"
+  ],
+  "summary": {
+    "rows_total": 5,
+    "rows_skipped": 0,
+    "rows_checked": 5,
+    "rows_importable": 4,
+    "rows_rejected": 1,
+    "amounts_unparseable": 0,
+    "amounts_ambiguous": 2,
+    "amounts_sensitive": 2,
+    "dates_invalid": 1,
+    "signed_total": "-2019.234",
+    "findings": 5
+  },
+  "findings": [
+    {
+      "code": "AMOUNT_FORMAT_SENSITIVE",
+      "severity": "info",
+      "row": 1,
+      "column": "amount",
+      "value": "-4.50",
+      "message": "this cell parses differently under another of Sure's four number formats; the configured format wins silently",
+      "witness": {
+        "chosen": "1.234,56",
+        "chosen_value": "-450",
+        "alternatives": [
+          {
+            "number_format": "1,234.56",
+            "value": "-4.50"
+          },
+          {
+            "number_format": "1 234,56",
+            "value": "-4.50"
+          }
+        ],
+        "ratio": "1E+2"
+      }
+    },
+    {
+      "code": "AMOUNT_FORMAT_AMBIGUOUS",
+      "severity": "warning",
+      "row": 2,
+      "column": "amount",
+      "value": "1,234",
+      "message": "this cell parses differently under another of Sure's four number formats; the configured format wins silently",
+      "witness": {
+        "chosen": "1.234,56",
+        "chosen_value": "1.234",
+        "alternatives": [
+          {
+            "number_format": "1,234.56",
+            "value": "1234"
+          },
+          {
+            "number_format": "1,234",
+            "value": "1234"
+          }
+        ],
+        "ratio": "0.001"
+      }
+    },
+    {
+      "code": "AMOUNT_FORMAT_AMBIGUOUS",
+      "severity": "warning",
+      "row": 3,
+      "column": "amount",
+      "value": "1.234",
+      "message": "this cell parses differently under another of Sure's four number formats; the configured format wins silently",
+      "witness": {
+        "chosen": "1.234,56",
+        "chosen_value": "1234",
+        "alternatives": [
+          {
+            "number_format": "1,234.56",
+            "value": "1.234"
+          },
+          {
+            "number_format": "1 234,56",
+            "value": "1.234"
+          }
+        ],
+        "ratio": "1E+3"
+      }
+    },
+    {
+      "code": "AMOUNT_FORMAT_SENSITIVE",
+      "severity": "info",
+      "row": 5,
+      "column": "amount",
+      "value": "-9.00",
+      "message": "this cell parses differently under another of Sure's four number formats; the configured format wins silently",
+      "witness": {
+        "chosen": "1.234,56",
+        "chosen_value": "-900",
+        "alternatives": [
+          {
+            "number_format": "1,234.56",
+            "value": "-9.00"
+          },
+          {
+            "number_format": "1 234,56",
+            "value": "-9.00"
+          }
+        ],
+        "ratio": "1E+2"
+      }
+    },
+    {
+      "code": "DATE_INVALID",
+      "severity": "error",
+      "row": 5,
+      "column": "date",
+      "value": "2026-13-40",
+      "message": "date does not match format %Y-%m-%d",
+      "witness": {
+        "date_format": "%Y-%m-%d"
+      }
+    }
+  ]
+}
